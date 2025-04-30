@@ -8,8 +8,8 @@ export default  function App() {
   return (
     <>
     <div className='container'>
+      <Adder/>
     </div>
-    <Adder/>
     </>
     
     
