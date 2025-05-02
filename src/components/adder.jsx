@@ -1,13 +1,14 @@
 import { useState } from "react";
 
+let index = 0;
 
 // main input
 export default function Adder() {
 
-  
+
   let [task, newtask] = useState()
 
-  function passNewTask(e){
+  function passNewTask(e) {
     newtask(e.target.value)
   }
 
@@ -15,23 +16,25 @@ export default function Adder() {
 
     <div className="adder">
       <input className="input" onChange={e => passNewTask(e)} placeholder="Enter a task" />
-      <AddBtn task={task}/>
+      <AddBtn task={task} />
     </div>
   );
 }
 
 // renderer
-function Added({ list }) {
-  console.log(list)
+function Added({ tasks, del }) {
+  console.log(tasks)
+    
+
   return (
     <div>
-      {list.map((item)=> (
-        <div key={item.id}> 
-        {item.task  } 
-        <DeleteBtn />  
-        <DoneBtn />
-        </div> 
-      ))
+      {
+        tasks.map((item) => (
+          <div key={item.id}>
+            {item.task}
+            <button onClick={() =>del(item.id)}>Delete</button>
+          </div>
+        ))
       }
     </div>
   )
@@ -39,37 +42,25 @@ function Added({ list }) {
 }
 
 // Buttons
-function AddBtn({task}){
-  let index = 0; 
-
+function AddBtn({ task }) {
   let [tasks, newtask] = useState([])
+
   function append() {
-    newtask(t => [...t, {id: index++, task}])
+    newtask(t => [...t, { id: index++, task }])
 
   }
+
+  function del(id){
+    newtask(
+      tasks.filter(t => (t.id !== id))
+    )}
 
   return (
     <>
       <button className="button" onClick={append} >Add</button>
-      <Added list={tasks} />
+      <Added tasks={tasks} del={del} />
     </>
 
   )
 
 }
-
-function DeleteBtn(){
-
-  return(
-    <button>Delete</button>
-  )
-}
-
-
-function DoneBtn(){
-  return(
-    <button>Done</button>
-  )
-}
-
-
