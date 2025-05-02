@@ -1,57 +1,75 @@
 import { useState } from "react";
 
+
+// main input
 export default function Adder() {
+
+  
+  let [task, newtask] = useState()
+
+  function passNewTask(e){
+    newtask(e.target.value)
+  }
 
   return (
 
     <div className="adder">
-      <input className="input" placeholder="Enter a task" />
-      <Button kind="A" />
+      <input className="input" onChange={e => passNewTask(e)} placeholder="Enter a task" />
+      <AddBtn task={task}/>
     </div>
   );
 }
 
-
-
-
-function Button({ kind }) {
-
-  let [tasks, newtask] = useState(["task1", "task2"])
-
-  function append() {
-    newtask(t => [...t, "task3"])
-
-  }
-
-  if (kind === "A") {
-    return (
-      <>
-        <button className="button" onClick={append} >Add</button>
-        <Added list={tasks} />
-      </>
-
-    )
-  }
-  else if (kind === "D") {
-    return (<button className="button" >Delete</button>)
-  } else {
-    return (<button className="button"> Done</button>)
-  }
-
-
-
-}
-
+// renderer
 function Added({ list }) {
   console.log(list)
   return (
     <div>
-      {list.map(item => (
-        <div > {item} </div>
-
+      {list.map((item)=> (
+        <div key={item.id}> 
+        {item.task  } 
+        <DeleteBtn />  
+        <DoneBtn />
+        </div> 
       ))
       }
     </div>
   )
 
 }
+
+// Buttons
+function AddBtn({task}){
+  let index = 0; 
+
+  let [tasks, newtask] = useState([])
+  function append() {
+    newtask(t => [...t, {id: index++, task}])
+
+  }
+
+  return (
+    <>
+      <button className="button" onClick={append} >Add</button>
+      <Added list={tasks} />
+    </>
+
+  )
+
+}
+
+function DeleteBtn(){
+
+  return(
+    <button>Delete</button>
+  )
+}
+
+
+function DoneBtn(){
+  return(
+    <button>Done</button>
+  )
+}
+
+
