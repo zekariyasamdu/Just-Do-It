@@ -1,16 +1,15 @@
-
-import './App.css'
-import Adder from './components/adder'
+import Header from './components/Header'
+import Add from './components/Add'
+import Added from "./components/Added"
 
 
 export default  function App() {
 
   return (
-    <>
-    <div className='container'>
-      <Adder/>
+    <div className='main'>
+      <Header />
+      <Add />
     </div>
-    </>
     
   )
 }
