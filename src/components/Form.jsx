@@ -1,12 +1,13 @@
 import { useState } from "react";
 import '../style/Form.css'
-// Input Form
+import { removeDefault, resetTag } from '../utils/utils'
+
+
 export default function Form({ append }) {
 
   // Passes an input to our add button 
-  let [title, newtask] = useState()
-  let [content , newcontent] = useState()
-  let [tag, newtag] = useState();
+  let [title, newtask] = useState('')
+  let [content, newcontent] = useState('')
 
   function newTitle(e) {
     newtask(e.target.value)
@@ -16,39 +17,38 @@ export default function Form({ append }) {
     newcontent(e.target.value)
   }
 
+
+
+  // Tags that are getting sent out
+  let [tag, newtag] = useState(['']);
+  const [tagCollection, addNewCollection] = useState([])
+
   function newTag(e) {
     newtag(e.target.value)
   }
 
-  // Tags that are getting sent out
-  const [tagCollection, addNewCollection] = useState([])
-
-  function addTag(){
-    addNewCollection(t => [...t, [Date.now(), tag]])
-    console.log(tagCollection)
+  function addTag() {
+    if (tag.trim() !== '') {
+      addNewCollection(t => [...t, [Date.now(), tag]])
+    } else {
+      console.error("tag can't be empty")
+    }
   }
-
-  function resetTag(){
-    addNewCollection([])
-  }
-
-
-
 
   return (
 
-    <div className="form">
+    <form className="form" onSubmit={(e) => removeDefault(e)}>
       <h1 className="title">TITLE</h1>
-      <input className="title-input" onChange={e => newTitle(e)} placeholder="Title" />
+      <input className="title-input" onChange={e => newTitle(e)} placeholder="Title" required />
       <h1 className="content">CONTENT</h1>
-      <textarea className="content-input" onChange={e => newContent(e)} placeholder="Content"></textarea>
+      <textarea className="content-input" onChange={e => newContent(e)} placeholder="Content" required></textarea>
       <h1 className="tags">TAGS</h1>
       <div className="sub-class">
         <textarea className="tag-input" onChange={e => newTag(e)} placeholder="Add tag"></textarea>
-        <button className="addtag-btn" onClick={() => addTag()}> <i className="fa-solid fa-plus"></i></button>
+        <button className="addtag-btn" onClick={() => addTag()}> <i className="fa-solid fa-plus "></i></button>
       </div>
-      <AddBtn task={title} content={content} tags={tagCollection} append={append} reset={resetTag} />
-    </div>
+      <AddBtn task={title} content={content} tags={tagCollection} append={append} reset={()=>resetTag(addNewCollection)} />
+    </form>
 
 
   );
@@ -59,7 +59,7 @@ export default function Form({ append }) {
 function AddBtn({ task, append, content, tags, reset }) {
   return (
     <>
-      <button className="add-btn" onClick={() => append(task, content, tags, reset) } >Add</button>
+      <button type="submit" className="add-btn" onClick={() => append(task, content, tags, reset)} >Add</button>
     </>
 
   )
