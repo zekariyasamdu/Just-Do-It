@@ -1,0 +1,17 @@
+
+.add {
+    display: inline-block;
+    border-radius: 5px;
+    padding: 15px 20px;
+    background-color: blue;
+    position: absolute;
+    border: none;
+    right: 20px;
+    bottom: 10px;
+    color: white;
+}
+
+.add:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}

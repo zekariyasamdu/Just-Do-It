@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import '../style/Form.css'
 // Input Form
 export default function Form({ append }) {
 
@@ -38,14 +38,14 @@ export default function Form({ append }) {
   return (
 
     <div className="form">
-      <h1 className="title">title</h1>
+      <h1 className="title">TITLE</h1>
       <input className="title-input" onChange={e => newTitle(e)} placeholder="Title" />
-      <h1 className="content">Content</h1>
+      <h1 className="content">CONTENT</h1>
       <textarea className="content-input" onChange={e => newContent(e)} placeholder="Content"></textarea>
       <h1 className="tags">TAGS</h1>
       <div className="sub-class">
         <textarea className="tag-input" onChange={e => newTag(e)} placeholder="Add tag"></textarea>
-        <button className="addtag-btn" onClick={() => addTag()}> add</button>
+        <button className="addtag-btn" onClick={() => addTag()}> <i className="fa-solid fa-plus"></i></button>
       </div>
       <AddBtn task={title} content={content} tags={tagCollection} append={append} reset={resetTag} />
     </div>

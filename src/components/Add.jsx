@@ -1,5 +1,6 @@
 import { useState } from "react"
 import Added from "./Added.jsx"
+import '../style/Add.css'
 
 
 export default function Add() {

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import Form from './Form'
+import '../style/Added.css'
 
 // All our added elemets
 export default function Added({ visible }) {

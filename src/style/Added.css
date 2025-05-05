@@ -1,0 +1,53 @@
+.added-container {
+    width: 1350px;
+    height: max-content;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 30px;
+    padding: 20px;
+    gap: 30px;
+    flex-direction: row;
+    margin: auto;
+}
+
+.each-container {
+    width: 400px;
+    height: 100px;
+    padding: 10px;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    gap: 8px;
+    border-radius: 5px;
+    border: 2px solid gainsboro;
+}
+.each-container:hover{
+    transform: scale(1.05);
+}
+
+.added-title{
+    font-weight: bolder;
+}
+.added-date{
+    font-size: 13px;
+    color: gray;
+}
+
+.del-btn {
+    position: absolute;
+    right: 3%;
+    cursor: pointer;
+
+}
+
+.all-tags {
+    display: flex;
+    color: gray;
+    font-size: 12px;
+}
+
+.each-tag {
+    width: max-content;
+    height: max-content;
+    margin-right: 5px;
+}

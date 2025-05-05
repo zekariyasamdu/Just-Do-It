@@ -1,0 +1,97 @@
+.form {
+    width: 60%;
+    height: max-content;
+    margin: auto;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px;
+    position: static;
+    border: 2px solid gainsboro;
+    border-radius: 5px;
+
+}
+
+.title{
+    font-size: 13px;
+    color: gray;
+    font-weight: bolder;
+}
+.content{
+    font-size: 13px;
+    color: gray;
+    font-weight: bolder;
+}
+.tags{
+    font-size: 13px;
+    color: gray;
+    font-weight: bolder;
+}
+
+.title-input {
+    width: 95%;
+    height: 30px;
+    resize: none;
+    background-color: gainsboro;
+    border: none;
+    padding: 5px;
+}
+
+.title-input:focus {
+    border: none;
+    outline: none;
+}
+
+.content-input {
+    width: 95%;
+    height: 60px;
+    resize: none;
+    padding: 5px;
+    background-color: gainsboro;
+    border: none;
+}
+
+.content-input:focus {
+    border: none;
+    outline: none;
+}
+
+.sub-class {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.tag-input {
+    width: 130px;
+    height: 20px;
+    resize: none;
+    background-color: gainsboro;
+    padding: 5px;
+    border: 1px solid rgb(145, 145, 145);
+}
+
+.tag-input:focus {
+    border: 1px solid rgb(145, 145, 145);
+    outline: none;
+}
+.addtag-btn{
+    height: max-content;
+    width: max-content;
+    padding: 7px 7px;
+    color: blue;
+    border: 1px solid blue;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.add-btn {
+    width: 96%;
+    height: 30px;
+    background-color: blue;
+    font-weight: bolder;
+    color: aliceblue;
+    border-radius: 5px;
+    cursor: pointer;
+}
