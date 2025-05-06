@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Added from "./Added.jsx"
-import '../style/Add.css'
+import '../style/ShowForm.css'
 
 
 export default function Add() {

@@ -1,6 +1,5 @@
 import Header from './components/Header'
-import Add from './components/Add'
-import Added from "./components/Added"
+import Add from './components/ShowForm'
 
 
 export default  function App() {

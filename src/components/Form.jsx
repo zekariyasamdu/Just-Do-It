@@ -5,6 +5,7 @@ import { removeDefault, resetTag } from '../utils/utils'
 
 export default function Form({ append }) {
 
+
   // Passes an input to our add button 
   let [title, newtask] = useState('')
   let [content, newcontent] = useState('')
@@ -29,10 +30,18 @@ export default function Form({ append }) {
 
   function addTag() {
     if (tag.trim() !== '') {
-      addNewCollection(t => [...t, [Date.now(), tag]])
+      addNewCollection(t => [...t, [new Date().getTime(), tag]])
     } else {
       console.error("tag can't be empty")
     }
+  }
+
+  function removeTag(key) {
+
+    let newTags = tagCollection.filter(t => {
+      return t[0] !== key
+    })
+    addNewCollection(newTags)
   }
 
   return (
@@ -46,8 +55,15 @@ export default function Form({ append }) {
       <div className="sub-class">
         <textarea className="tag-input" onChange={e => newTag(e)} placeholder="Add tag"></textarea>
         <button className="addtag-btn" onClick={() => addTag()}> <i className="fa-solid fa-plus "></i></button>
+        {tagCollection.map(t => (
+          <div className="each-tag" key={t[0]}>
+            #{t[1]}
+            {console.log(t[0])}
+            <button className="removetag-btn" onClick={() => removeTag(t[0])}><i className="fa-solid fa-xmark"></i></button>
+          </div>
+        ))}
       </div>
-      <AddBtn task={title} content={content} tags={tagCollection} append={append} reset={()=>resetTag(addNewCollection)} />
+      <AddBtn task={title} content={content} tags={tagCollection} append={append} reset={() => resetTag(addNewCollection)} />
     </form>
 
 
@@ -57,6 +73,7 @@ export default function Form({ append }) {
 
 // Buttons
 function AddBtn({ task, append, content, tags, reset }) {
+
   return (
     <>
       <button type="submit" className="add-btn" onClick={() => append(task, content, tags, reset)} >Add</button>

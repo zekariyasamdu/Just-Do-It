@@ -37,7 +37,10 @@
     position: absolute;
     right: 3%;
     cursor: pointer;
-
+    color: gray;
+}
+.del-btn:hover {
+    color: red;
 }
 
 .all-tags {
@@ -50,4 +53,17 @@
     width: max-content;
     height: max-content;
     margin-right: 5px;
+}
+
+.edit-btn{
+    position: absolute;
+    bottom: 10%;
+    right: 3%;
+    color: gray;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.edit-btn:hover {
+    color: green;
 }
