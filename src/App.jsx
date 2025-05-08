@@ -1,5 +1,5 @@
 import Header from './components/Header'
-import Add from './components/ShowForm'
+import ShowForm from './components/ShowForm'
 
 
 export default  function App() {
@@ -7,7 +7,7 @@ export default  function App() {
   return (
     <div className='main'>
       <Header />
-      <Add />
+      <ShowForm />
     </div>
     
   )

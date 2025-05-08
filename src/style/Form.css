@@ -76,17 +76,7 @@
     border: 1px solid rgb(145, 145, 145);
     outline: none;
 }
-.each-tag{
-    display: flex;
-    gap: 2px;
-    background-color: rgb(223, 216, 216);
-    border-radius: 5px;
-}
-.removetag-btn{
-    background: none;
-    border: none;
-    cursor: pointer;
-}
+
 .addtag-btn{
     height: max-content;
     width: max-content;
@@ -96,6 +86,27 @@
     cursor: pointer;
     border-radius: 3px;
 }
+
+
+.each-tag{
+    display: flex;
+    gap: 3px;
+    background-color: rgb(223, 216, 216);
+    border-radius: 5px;
+    padding: 2px;
+}
+.each-tag:hover{
+    transform: scale(1.1);
+}
+
+.removetag-btn{
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.removetag-btn:hover{
+    color: red;
+    }
 
 .add-btn {
     width: 96%;
