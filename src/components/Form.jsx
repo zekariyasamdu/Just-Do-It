@@ -3,11 +3,11 @@ import '../style/Form.css'
 import { removeDefault } from '../utils/utils'
 import Popup from './popup'
 
-export default function Form({settask, tagCollection, settagCollection, removeTag}) {
+export default function Form({settask, tagCollection, settagCollection, removeTag , setMessage}) {
 
   
   // Diplays a popup when ever a a from is added 
-  let [message, setMessage] = useState(false)
+
 
 
 
@@ -70,7 +70,7 @@ export default function Form({settask, tagCollection, settagCollection, removeTa
   return (
 
     <>
-      {message && <Popup />}
+     
 
       <form className="form" onSubmit={(e) => removeDefault(e)}>
         <h1 className="title">TITLE</h1>

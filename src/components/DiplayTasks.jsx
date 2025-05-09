@@ -1,10 +1,9 @@
-import '../style/Added.css'
-import { removeDefault} from "../utils/utils"
-
+import '../style/DisplayTasks.css'
+import UpdateForm from './UpdateForm'
 
 
 // All our added elemets
-export default function DiplayTasks({tasks, removeTag, settask}) {
+export default function DiplayTasks({tasks, settask,  setMessage }) {
 
 
     function del(id) {
@@ -29,7 +28,7 @@ export default function DiplayTasks({tasks, removeTag, settask}) {
                     tasks.map((item) => (
                         (item.ReadOnly === true) ?
                             <div key={item.id} className="each-container">
-                                <div className="added-title">{item.task}</div>
+                                <div className="added-title">{item.title}</div>
                                 <div className="added-date">{item.id.toDateString()}</div>
                                 <div className="added-content">{item.content}</div>
                                 <div className="all-tags">{item.tags.map(t => (<div className="each-tag" key={t[0]}> #{t[1]}</div>))}</div>
@@ -37,16 +36,7 @@ export default function DiplayTasks({tasks, removeTag, settask}) {
                                 <div className="edit-btn" onClick={() => edit(item.id)}> <i className="fa-solid fa-pen"></i> </div>
                                 {item.edited && <div className="edited-mark">Edited</div>}
                             </div> :
-                            <form key={item.id} className="each-container" onSubmit={e => removeDefault(e)}>
-                                <input value={item.task} />
-                                <input value={item.content} />
-                                {item.tags.map(t => (
-                                    <div key={t[0]} >
-                                        #{t[1]}
-                                    </div>
-                                ))}
-                                <button type="submit" onClick={() => applyEdit(item.id)}>Done</button>
-                            </form>
+                            <UpdateForm key={item.id} item={item} settask={settask} tasks={tasks}  setMessage={setMessage} />
                     ))
                 }
             </div>

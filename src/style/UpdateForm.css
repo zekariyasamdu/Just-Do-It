@@ -1,0 +1,12 @@
+.btn-container{
+    display: flex;
+    gap: 5px;
+}
+
+.cancel-btn{
+    cursor: pointer;
+}
+
+.apply-edit-btn{
+    cursor: pointer;
+}

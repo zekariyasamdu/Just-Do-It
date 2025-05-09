@@ -67,3 +67,10 @@
 .edit-btn:hover {
     color: green;
 }
+
+.edited-mark{
+    position: absolute;
+    right: 9%;
+    font-size: 12px;
+    color: gray;
+}

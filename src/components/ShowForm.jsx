@@ -2,6 +2,7 @@ import { useState } from "react"
 import DiplayTasks from "./DiplayTasks.jsx"
 import Form from "./Form.jsx"
 import '../style/ShowForm.css'
+import Popup from "./popup.jsx"
 
 
 // ShowForm -> has the task of diplaying or not diplaying the Form component 
@@ -10,9 +11,9 @@ import '../style/ShowForm.css'
 
 export default function ShowForm() {
 
-    let [tasks, settask] = useState([])
+    const [tasks, settask] = useState([])
     const [tagCollection, settagCollection] = useState([])
-
+    const [message, setMessage] = useState(false)
 
     // toggling logic 
     const [visible, setVisibility] = useState(false)
@@ -25,10 +26,10 @@ export default function ShowForm() {
             <button className="add" onClick={toggler}>
                 <i className="fa-solid fa-plus"></i>
             </button>
+            {message && <Popup/>}
+            {visible && <Form settask={settask} tagCollection={tagCollection} settagCollection={settagCollection} setMessage={setMessage} />}
 
-            {visible && <Form settask={settask} tagCollection={tagCollection} settagCollection={settagCollection}  />}
-
-            <DiplayTasks tasks={tasks} settask={settask} />
+            <DiplayTasks tasks={tasks} settask={settask} setMessage={setMessage} />
         </>
     )
 }
