@@ -1,28 +1,32 @@
-import { useState } from "react"
+import { useContext, useRef} from "react"
 import { removeDefault } from "../utils/utils"
 import '../style/UpdateForm.css'
-import Popup from "./popup"
+import messageContext from "../Context/messageContext"
 
 
-export default function UpdateForm({ item, settask, tasks, setMessage }) {
-    const [newTitle, setNewTitle] = useState('')
-    const [newContent, setNewContent] = useState('')
+
+
+export default function UpdateForm({ item, settask, tasks}) {
+    const setMessage = useContext(messageContext)
+
+    const newTitleContentRef = useRef(null);
+    const newContentRef = useRef(null);
 
     function setTitle(e) {
-        setNewTitle(e.target.value)
+        newTitleContentRef.current = e.target.value;
     }
-
 
     function setContent(e) {
-        setNewContent(e.target.value)
+        newContentRef.current = e.target.value;
     }
+
 
     function applyEdit(id) {
 
 
-        if (newTitle.trim() !== '' && newContent.trim() !== '') {
+        if (newTitleContentRef.current.trim() !== '' && newContentRef.current.trim() !== '') {
             let newItem = tasks.map(t => {
-                return (id === t.id ? { ...t, title: newTitle, content: newContent, ReadOnly: true, edited: true } : t)
+                return (id === t.id ? { ...t, title: newTitleContentRef.current, content: newContentRef.current, ReadOnly: true, edited: true } : t)
             })
             settask(newItem)
             setMessage(true)

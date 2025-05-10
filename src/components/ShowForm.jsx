@@ -2,6 +2,8 @@ import { useState } from "react"
 import DiplayTasks from "./DiplayTasks.jsx"
 import Form from "./Form.jsx"
 import '../style/ShowForm.css'
+
+import messageContext from '../Context/messageContext.jsx'
 import Popup from "./popup.jsx"
 
 
@@ -29,7 +31,9 @@ export default function ShowForm() {
             {message && <Popup/>}
             {visible && <Form settask={settask} tagCollection={tagCollection} settagCollection={settagCollection} setMessage={setMessage} />}
 
-            <DiplayTasks tasks={tasks} settask={settask} setMessage={setMessage} />
+            <messageContext.Provider value={setMessage}>
+            <DiplayTasks tasks={tasks} settask={settask} />
+            </messageContext.Provider>
         </>
     )
 }

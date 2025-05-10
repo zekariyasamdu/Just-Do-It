@@ -1,41 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect, useRef} from "react";
 import '../style/Form.css'
 import { removeDefault } from '../utils/utils'
 import Popup from './popup'
 
-export default function Form({settask, tagCollection, settagCollection, removeTag , setMessage}) {
-
-  
-  // Diplays a popup when ever a a from is added 
-
-
+export default function Form({settask, tagCollection, settagCollection, setMessage}) {
 
 
   // Inputs that are passed to the append function 
-  let [title, newtask] = useState('')
-  let [content, newcontent] = useState('')
+  const titleRef = useRef(null);
+  const contentRef = useRef(null);
 
   function newTitle(e) {
-    newtask(e.target.value)
+    titleRef.current = e.target.value;
   }
 
   function newContent(e) {
-    newcontent(e.target.value)
+    contentRef.current = e.target.value;
   }
 
   
+  useEffect(()=>{
+    console.log("reRendered")
+})
   
   // Tags that are getting sent out
-  let [tag, newtag] = useState(['']);
+  const tagRef = useRef(null);
   
   function newTag(e) {
-    newtag(e.target.value)
+    tagRef.current = e.target.value;
   }
 
   // 
   function addTag() {
-    if (tag.trim() !== '') {
-      settagCollection(t => [...t, [new Date().getTime(), tag]])
+    if (tagRef.current.trim() !== '') {
+      settagCollection(t => [...t, [new Date().getTime(), tagRef.current]])
     } else {
       console.error("tag can't be empty")
     }
@@ -70,7 +68,6 @@ export default function Form({settask, tagCollection, settagCollection, removeTa
   return (
 
     <>
-     
 
       <form className="form" onSubmit={(e) => removeDefault(e)}>
         <h1 className="title">TITLE</h1>
@@ -91,7 +88,7 @@ export default function Form({settask, tagCollection, settagCollection, removeTa
         </div>
         <button type="submit"
           className="add-btn"
-          onClick={() => append(title, content, tagCollection)} >Add</button>
+          onClick={() => append(titleRef.current, contentRef.current, tagCollection)} >Add</button>
       </form>
     </>
 

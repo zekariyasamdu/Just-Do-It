@@ -3,7 +3,7 @@ import UpdateForm from './UpdateForm'
 
 
 // All our added elemets
-export default function DiplayTasks({tasks, settask,  setMessage }) {
+export default function DiplayTasks({tasks, settask}) {
 
 
     function del(id) {
@@ -36,7 +36,7 @@ export default function DiplayTasks({tasks, settask,  setMessage }) {
                                 <div className="edit-btn" onClick={() => edit(item.id)}> <i className="fa-solid fa-pen"></i> </div>
                                 {item.edited && <div className="edited-mark">Edited</div>}
                             </div> :
-                            <UpdateForm key={item.id} item={item} settask={settask} tasks={tasks}  setMessage={setMessage} />
+                            <UpdateForm key={item.id} item={item} settask={settask} tasks={tasks} />
                     ))
                 }
             </div>
