@@ -1,19 +1,31 @@
-import { BrowserRouter, Navigate, Routes } from "react-router-dom";
+import { BrowserRouter, Link, Navigate, Routes } from "react-router-dom";
 import { Route } from 'react-router-dom'
 import SignUp from "../Auth/Signup";
 import Authication from "../Pages/AuthPage";
 import HomePage from "../Pages/HomePage";
+import { useContext } from "react";
+import { loginContext } from "../Context/LoginContext";
+
 
 
 export default function AppRouter() {
+    const [login] = useContext(loginContext);
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/"
                     element={
-                        true === false ? <HomePage /> : <Navigate to='/login' replace />
+                        login === true ? <Navigate to='/home' replace /> : <Navigate to='/login' replace />
                     } />
-                <Route path="/login" element={<Authication />}/>
+                <Route path="/login"
+                    element={
+                        login === true ? <Navigate to='/home' replace /> : <Authication />
+                    } />
+
+                <Route path="/home"
+                    element={
+                        login === true ? <HomePage />:  <Authication />
+                    } />
                 <Route path="/signup" element={<SignUp />} />
             </Routes>
         </BrowserRouter>

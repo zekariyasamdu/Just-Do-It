@@ -32,7 +32,7 @@ export default function ShowForm() {
             {visible && <Form settask={settask} tagCollection={tagCollection} settagCollection={settagCollection} setMessage={setMessage} />}
 
             <messageContext.Provider value={setMessage}>
-            <DiplayTasks tasks={tasks} settask={settask} />
+                <DiplayTasks tasks={tasks} settask={settask} />
             </messageContext.Provider>
         </>
     )

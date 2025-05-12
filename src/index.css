@@ -28,3 +28,6 @@
     height: 900px;
     font-family: 'Comic Relief', cursive;
 }
+button {
+    cursor: pointer;
+}
