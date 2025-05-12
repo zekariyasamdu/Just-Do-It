@@ -1,15 +1,10 @@
-import Header from './components/Header'
-import ShowForm from './components/ShowForm'
+import AppRouter from "./routes/AppRouter";
 
 
 export default  function App() {
 
   return (
-    <div className='main'>
-      <Header />
-      <ShowForm />
-    </div>
-    
+    <AppRouter/>
   )
 }
 
