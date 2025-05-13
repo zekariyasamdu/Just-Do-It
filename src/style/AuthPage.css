@@ -44,6 +44,11 @@ header{
     padding: 10px;
     border-radius: 5px;
 }
+.signup-btn{
+    width: 95%;
+    padding: 10px;
+    border-radius: 5px;
+}
 
 .password{
     width: 90%;

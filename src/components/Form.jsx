@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef} from "react";
+import { useEffect, useRef} from "react";
 import '../style/Form.css'
 import { removeDefault } from '../utils/utils'
-import Popup from './popup'
 
 export default function Form({settask, tagCollection, settagCollection, setMessage}) {
 
