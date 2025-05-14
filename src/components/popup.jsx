@@ -1,3 +1,4 @@
+// style
 import '../style/popup.css'
 
 export default function Popup(){

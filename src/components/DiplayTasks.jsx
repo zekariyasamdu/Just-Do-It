@@ -1,23 +1,54 @@
-import '../style/DisplayTasks.css'
+import { useContext } from 'react';
+// components
 import UpdateForm from './UpdateForm'
+// contexts
+import { dataBaseUpdatedContext } from "../Context/DataBaseUpdatedContext.jsx"
+// firebase
+import { doc, updateDoc, deleteField, deleteDoc } from "firebase/firestore";
+import { db } from '../config/firebase';
+// utils 
+import { getCurrentUser, getNoteReferance } from '../utils/utils.js';
+// style
+import '../style/DisplayTasks.css'
 
 
 // All our added elemets
-export default function DiplayTasks({tasks, settask}) {
+export default function DiplayTasks({ tasks}) {
+    const [change, setChange] = useContext(dataBaseUpdatedContext)
+    const del = async (id) => {
+        try {
+            console.log("Deleting...")
+            await updateDoc(getNoteReferance(id), {
+                time: deleteField(),
+                title: deleteField(),
+                content: deleteField(),
+                tags: deleteField(),
+                ReadOnly: deleteField(),
+                edited: deleteField()
+            });
+            await deleteDoc(getNoteReferance(id));
 
+        } catch (e) {
+            console.error(e)
+        } finally {
+            console.log("Deleted!")
+            setChange(change => change + 1)
+        }
 
-    function del(id) {
-        settask(
-            tasks.filter(t => (t.id !== id))
-        )
     }
 
-    function edit(id) {
-        let editedTask = tasks.map(t => {
-            return (id === t.id ? { ...t, ReadOnly: false } : t)
+    const edit = async (id) => {
+        try {
+            console.log("setting...")
+            await updateDoc(getNoteReferance(id), {
+                ReadOnly: false,
+            });
+        } catch (e) {
+            console.error(e)
+        } finally {
+            console.log("finished...")
+            setChange(change => change + 1)
         }
-        )
-        settask(editedTask)
     }
 
     return (
@@ -29,15 +60,18 @@ export default function DiplayTasks({tasks, settask}) {
                         (item.ReadOnly === true) ?
                             <div key={item.id} className="each-container">
                                 <div className="added-title">{item.title}</div>
-                                <div className="added-date">{item.id.toDateString()}</div>
+                                <div className="added-date">{item.time}</div>
                                 <div className="added-content">{item.content}</div>
-                                <div className="all-tags">{item.tags.map(t => (<div className="each-tag" key={t[0]}> #{t[1]}</div>))}</div>
-                                <div className="del-btn" onClick={() => del(item.id)}><i className="fa-solid fa-xmark"></i></div>
-                                <div className="edit-btn" onClick={() => edit(item.id)}> <i className="fa-solid fa-pen"></i> </div>
+                                <div className="all-tags">{item.tags.map((t, index) => (<div className="each-tag" key={index}> #{t}</div>))}</div>
+                                <div className="del-btn"
+                                    onClick={() => del(item.id)}><i className="fa-solid fa-xmark"></i></div>
+                                <div className="edit-btn"
+                                    onClick={() => edit(item.id)}> <i className="fa-solid fa-pen"></i> </div>
                                 {item.edited && <div className="edited-mark">Edited</div>}
                             </div> :
-                            <UpdateForm key={item.id} item={item} settask={settask} tasks={tasks} />
+                            <UpdateForm key={item.id} item={item} />
                     ))
+
                 }
             </div>
 

@@ -1,40 +1,52 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+// contexts
+import { messageContext } from '../Context/messageContext.jsx'
+// components 
 import DiplayTasks from "./DiplayTasks.jsx"
 import Form from "./Form.jsx"
+import Popup from "./Popup.jsx"
+// firebase
+import { getDocs } from "firebase/firestore"
+import { dataBaseUpdatedContext } from "../Context/DataBaseUpdatedContext.jsx"
+// style 
 import '../style/ShowForm.css'
-import messageContext from '../Context/messageContext.jsx'
-import Popup from "./popup.jsx"
-import { getDocs, collection } from "firebase/firestore"
-
-import { db } from "../config/firebase";
-
+import { getCurrenCollection } from "../utils/utils.js"
 
 // ShowForm -> has the task of diplaying or not diplaying the Form component 
 // More over is responsible for containing the main state that contains all the tasks and some states that are shared between sibling components.
 
 
 export default function ShowForm() {
-    
+    // contexts 
+    const [change] = useContext(dataBaseUpdatedContext)
+    const [message] = useContext(messageContext)
+
     const [tasks, settask] = useState([])
+    const [tagCollection, settagCollection] = useState([])
 
-    const noteCollections = collection(db, "Notes")
 
-    useEffect(()=>{
+    useEffect(() => {
 
-        const getData = async()=>{ 
-            try{
-            const data = await getDocs(noteCollections)
-            console.log(data)
-            }catch(e){
-                console.log("Error", e)
+        const getData = async () => {
+
+            try {
+                console.log("loging...")
+                const data = await getDocs(getCurrenCollection())
+                const wantedData = data.docs?.map((doc) => ({
+                    ...doc.data(),
+                    id: doc.id
+
+                }))
+                settask(wantedData)
+            } catch (e) {
+                console.error("Error", e)
+            } finally {
+                console.log("finished")
             }
         }
         getData();
 
-    }, [])
-    
-    const [tagCollection, settagCollection] = useState([])
-    const [message, setMessage] = useState(false)
+    }, [change])
 
     // toggling logic 
     const [visible, setVisibility] = useState(false)
@@ -47,12 +59,14 @@ export default function ShowForm() {
             <button className="add" onClick={toggler}>
                 <i className="fa-solid fa-plus"></i>
             </button>
-            {message && <Popup/>}
-            {visible && <Form settask={settask} tagCollection={tagCollection} settagCollection={settagCollection} setMessage={setMessage} />}
+            {message && <Popup />}
+            {visible && <Form settask={settask}
+                tagCollection={tagCollection}
+                settagCollection={settagCollection}
+            />}
 
-            <messageContext.Provider value={setMessage}>
-                <DiplayTasks tasks={tasks} settask={settask} />
-            </messageContext.Provider>
+            <DiplayTasks tasks={tasks} />
+
         </>
     )
 }

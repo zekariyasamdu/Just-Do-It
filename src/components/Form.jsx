@@ -1,13 +1,23 @@
-import { useEffect, useRef} from "react";
+import { useRef, useContext } from "react";
+// contexts
+import { dataBaseUpdatedContext } from "../Context/DataBaseUpdatedContext.jsx"
+import { messageContext } from "../Context/messageContext.jsx";
+// firebase
+import { addDoc } from "firebase/firestore";
+// utils
+import { getCurrenCollection, removeDefault } from '../utils/utils'
+// style
 import '../style/Form.css'
-import { removeDefault } from '../utils/utils'
 
-export default function Form({settask, tagCollection, settagCollection, setMessage}) {
 
+export default function Form({ tagCollection, settagCollection }) {
+  // contexts
+  const [change, setChange] = useContext(dataBaseUpdatedContext)
+  const [message, setMessage] = useContext(messageContext)
 
   // Inputs that are passed to the append function 
-  const titleRef = useRef(null);
-  const contentRef = useRef(null);
+  const titleRef = useRef();
+  const contentRef = useRef();
 
   function newTitle(e) {
     titleRef.current = e.target.value;
@@ -17,14 +27,9 @@ export default function Form({settask, tagCollection, settagCollection, setMessa
     contentRef.current = e.target.value;
   }
 
-  
-  useEffect(()=>{
-    console.log("reRendered")
-})
-  
   // Tags that are getting sent out
-  const tagRef = useRef(null);
-  
+  const tagRef = useRef();
+
   function newTag(e) {
     tagRef.current = e.target.value;
   }
@@ -32,35 +37,49 @@ export default function Form({settask, tagCollection, settagCollection, setMessa
   // 
   function addTag() {
     if (tagRef.current.trim() !== '') {
-      settagCollection(t => [...t, [new Date().getTime(), tagRef.current]])
+      settagCollection(t => [...t, tagRef.current])
     } else {
       console.error("tag can't be empty")
     }
   }
 
   function removeTag(key) {
-    
-    let newTags = tagCollection.filter(t => {
-        return t[0] !== key
+
+    let newTags = tagCollection.filter((t, index) => {
+      return index !== key
     })
     settagCollection(newTags)
-}
+  }
 
-
-
-  
 
   // appends a task to the main task container 
-  function append(title, content, tags) {
+  const append = async (title, content, tags) => {
     if (title.trim() !== '' && content.trim() !== '') {
-      settask(t => [...t, { id: new Date(), title, content, tags, ReadOnly: true, edited: false }])
-      setMessage(true)
-      setTimeout(() => { setMessage(false) }, 4000)
-  
-      settagCollection([])// resets the tag array eveytime a need note is added
+
+      try {
+        console.log("creating..")
+        await addDoc(getCurrenCollection(), {
+          id: new Date().getMilliseconds.toString(),
+          time: new Date().toDateString(),
+          title,
+          content,
+          tags,
+          ReadOnly: true,
+          edited: false
+        })
+      } catch (e) {
+        console.error(e)
+      } finally {
+        console.log("created..")
+        setChange(change => change + 1)
+        setMessage(true)
+        setTimeout(() => { setMessage(false) }, 4000)
+        settagCollection([])// resets the tag array eveytime a need note is added
+        console.log("created")
+      }
+
     } else {
       console.error("please fill in an input")
-  
     }
   }
 
@@ -68,20 +87,30 @@ export default function Form({settask, tagCollection, settagCollection, setMessa
 
     <>
 
-      <form className="form" onSubmit={(e) => removeDefault(e)}>
+      <form className="form"
+        onSubmit={(e) => removeDefault(e)}>
         <h1 className="title">TITLE</h1>
-        <input className="title-input" onChange={e => newTitle(e)} placeholder="Title" required />
+        <input className="title-input"
+          onChange={e => newTitle(e)}
+          placeholder="Title"
+          required />
         <h1 className="content">CONTENT</h1>
-        <textarea className="content-input" onChange={e => newContent(e)} placeholder="Content" required></textarea>
+        <textarea className="content-input"
+          onChange={e => newContent(e)}
+          placeholder="Content"
+          required></textarea>
         <h1 className="tags">TAGS</h1>
         <div className="sub-class">
-          <textarea className="tag-input" onChange={e => newTag(e)} placeholder="Add tag"></textarea>
-          <button className="addtag-btn" onClick={() => addTag()}> <i className="fa-solid fa-plus "></i></button>
-          {tagCollection.map(t => (
-            <Removetag key={t[0]} 
-            text={t[1]} 
-            removeTag={removeTag} 
-            id={t[0]}
+          <textarea className="tag-input"
+            onChange={e => newTag(e)}
+            placeholder="Add tag"></textarea>
+          <button className="addtag-btn"
+            onClick={() => addTag()}> <i className="fa-solid fa-plus "></i></button>
+          {tagCollection.map((t, index) => (
+            <Removetag key={index}
+              text={t}
+              removeTag={removeTag}
+              id={index}
             />
           ))}
         </div>
@@ -98,13 +127,13 @@ export default function Form({settask, tagCollection, settagCollection, setMessa
 
 
 
-function Removetag({ text, removeTag, id, currentcollection}) {
-    
+function Removetag({ text, removeTag, id, currentcollection }) {
+
 
   return (
-      <div className="each-tag">
-          #{text}
-          <button className="removetag-btn" onClick={() => removeTag(id, currentcollection)}><i className="fa-solid fa-xmark"></i></button>
-      </div>
+    <div className="each-tag">
+      #{text}
+      <button className="removetag-btn" onClick={() => removeTag(id, currentcollection)}><i className="fa-solid fa-xmark"></i></button>
+    </div>
   )
 }

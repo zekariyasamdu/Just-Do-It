@@ -1,16 +1,21 @@
-import { useContext, useRef} from "react"
-import { removeDefault } from "../utils/utils"
+import { useContext, useRef } from "react"
+// context
+import {messageContext} from "../Context/messageContext"
+import { dataBaseUpdatedContext } from "../Context/DataBaseUpdatedContext"
+// style
 import '../style/UpdateForm.css'
-import messageContext from "../Context/messageContext"
+// utils
+import { getNoteReferance, removeDefault } from "../utils/utils"
+import { updateDoc } from "firebase/firestore"
 
 
+export default function UpdateForm({ item }) {
+    // contexts 
+    const [message, setMessage] = useContext(messageContext)
+    const [change, setChange] = useContext(dataBaseUpdatedContext)
 
-
-export default function UpdateForm({ item, settask, tasks}) {
-    const setMessage = useContext(messageContext)
-
-    const newTitleContentRef = useRef(null);
-    const newContentRef = useRef(null);
+    const newTitleContentRef = useRef();
+    const newContentRef = useRef();
 
     function setTitle(e) {
         newTitleContentRef.current = e.target.value;
@@ -21,45 +26,64 @@ export default function UpdateForm({ item, settask, tasks}) {
     }
 
 
-    function applyEdit(id) {
+    const applyEdit = async (id) => {
 
 
         if (newTitleContentRef.current.trim() !== '' && newContentRef.current.trim() !== '') {
-            let newItem = tasks.map(t => {
-                return (id === t.id ? { ...t, title: newTitleContentRef.current, content: newContentRef.current, ReadOnly: true, edited: true } : t)
-            })
-            settask(newItem)
-            setMessage(true)
-            setTimeout(() => { setMessage(false) }, 4000)
-
+            try {
+                await updateDoc(getNoteReferance(id), {
+                    title: newTitleContentRef.current,
+                    content: newContentRef.current,
+                    ReadOnly: true,
+                    edited: true
+                })
+            } catch (e) {
+                console.error(e)
+            } finally {
+                setChange(change => change + 1)
+                setMessage(true)
+                setTimeout(() => { setMessage(false) }, 4000)
+            }
         }
         else {
             console.error("can't have an empty field")
         }
     }
 
-    function cancel(id) {
-        let newItem = tasks.map(t => {
-            return (id === t.id ? { ...t, ReadOnly: true, } : t)
-        })
-        settask(newItem)
+    const cancel = async (id) => {
+        try {
+            await updateDoc(getNoteReferance(id), {
+                ReadOnly: true
+            })
+        } catch (e) {
+            console.error(e)
+        } finally {
+            setChange(change => change + 1)
+        }
     }
 
 
     return (<>
-        <form className="each-container" onSubmit={e => removeDefault(e)}>
-            <input placeholder={item.title} onChange={(e) => setTitle(e)} />
-            <input placeholder={item.content} onChange={(e) => setContent(e)} />
+        <form className="each-container"
+            onSubmit={e => removeDefault(e)}>
+            <input placeholder={item.title}
+                onChange={(e) => setTitle(e)} />
+            <input placeholder={item.content}
+                onChange={(e) => setContent(e)} />
             <div className="all-tags">
-                {item.tags.map(t => (
-                    <div key={t[0]} className="each-tag">
+                {item?.tags?.map(t => (
+                    <div key={t[0]}
+                        className="each-tag">
                         #{t[1]}
                     </div>
                 ))}
             </div>
             <div className="btn-container">
-                <button className="cancel-btn" onClick={() => cancel(item.id)}>cancel</button>
-                <button className="apply-edit-btn" type="submit" onClick={() => applyEdit(item.id)}>Done</button>
+                <button className="cancel-btn"
+                    onClick={() => cancel(item.id)}>cancel</button>
+                <button className="apply-edit-btn"
+                    type="submit"
+                    onClick={() => applyEdit(item.id)}>Done</button>
             </div>
         </form>
     </>)

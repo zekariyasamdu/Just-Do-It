@@ -8,15 +8,6 @@
     border-bottom: 1px solid gainsboro;
 }
 
-.search {
-    width: 300px;
-    height: 30px;
-    border-radius: 10px;
-    padding-left: 10px;
-    background-color: gainsboro;
-    border: 0;
-}
-
 .profile {
     margin-right: 0px;
 }

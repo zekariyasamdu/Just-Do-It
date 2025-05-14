@@ -1,14 +1,18 @@
 import { useContext } from 'react'
-import '../style/Header.css'
+// contexts
 import { loginContext } from '../Context/LoginContext'
+// firebase
 import { Link } from 'react-router-dom'
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase"
-
+// utiles
+import { getCurrentUserEmail } from '../utils/utils';
+// style
+import '../style/Header.css'
 
 export default function Header() {
     const [login, setLogin] = useContext(loginContext)
-
+    const email = getCurrentUserEmail()
     const changeLoginStatus = async()=>{
         try{
         await signOut(auth)
@@ -22,10 +26,8 @@ export default function Header() {
     return (
         <div className="header">
             <h2 className="name" >Notes</h2>
-            <input className="search" placeholder="Search Notes" />
             <div className="user">
-                <div className="user-info profile">TU</div>
-                <p className="user-info user-name">Test user</p>
+                <p className="user-info user-name">{email}</p>
                 <Link onClick={changeLoginStatus} to='/' className="user-info logout" >Logout</Link>
             </div>
 
