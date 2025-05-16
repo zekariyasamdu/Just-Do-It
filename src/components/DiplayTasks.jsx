@@ -4,10 +4,10 @@ import UpdateForm from './UpdateForm'
 // contexts
 import { dataBaseUpdatedContext } from "../Context/DataBaseUpdatedContext.jsx"
 // firebase
-import { doc, updateDoc, deleteField, deleteDoc } from "firebase/firestore";
-import { db } from '../config/firebase';
+import { updateDoc, deleteField, deleteDoc } from "firebase/firestore";
+
 // utils 
-import { getCurrentUser, getNoteReferance } from '../utils/utils.js';
+import {  getNoteReferance } from '../utils/utils.js';
 // style
 import '../style/DisplayTasks.css'
 

@@ -2,11 +2,13 @@ import { useContext, useRef } from "react"
 // context
 import {messageContext} from "../Context/messageContext"
 import { dataBaseUpdatedContext } from "../Context/DataBaseUpdatedContext"
+// firebase 
+import { updateDoc } from "firebase/firestore"
 // style
 import '../style/UpdateForm.css'
 // utils
 import { getNoteReferance, removeDefault } from "../utils/utils"
-import { updateDoc } from "firebase/firestore"
+
 
 
 export default function UpdateForm({ item }) {
@@ -71,10 +73,10 @@ export default function UpdateForm({ item }) {
             <input placeholder={item.content}
                 onChange={(e) => setContent(e)} />
             <div className="all-tags">
-                {item?.tags?.map(t => (
-                    <div key={t[0]}
+                {item.tags?.map((t, i) => (
+                    <div key={i}
                         className="each-tag">
-                        #{t[1]}
+                        #{t}
                     </div>
                 ))}
             </div>

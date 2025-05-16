@@ -1,9 +1,13 @@
-import {  useContext, useRef } from "react";
+import { use, useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { removeDefault } from "../utils/utils"
+// context
+import { loginContext } from "../Context/LoginContext";
+// firebase
 import { auth } from "../config/firebase"
 import { signInWithEmailAndPassword } from "firebase/auth"
-import { loginContext } from "../Context/LoginContext";
+// utils
+import { removeDefault } from "../utils/utils"
+
 
 export default function Login() {
     const [login, setLogin] = useContext(loginContext)
@@ -18,17 +22,26 @@ export default function Login() {
         passwordRef.current = e.target.value;
     }
 
+    const [loginMessage, setLoginMessage] = useState(false);
+    const [loginError, setLoginError] = useState(false);
+
+
     const Login = async (e) => {
         removeDefault(e)
         try {
+            setLoginMessage(true)
             await signInWithEmailAndPassword(auth, emailRef.current, passwordRef.current)
 
         } catch (e) {
+            setLoginMessage(false)
+            setLoginError(true)
+            setTimeout(()=>{setLoginError(false)}, 3000)
             console.log("error", e)
             return
         }
-        setLogin(true) 
+        setLogin(true)
     }
+
 
 
     return (
@@ -36,9 +49,19 @@ export default function Login() {
             <header>JUST DO IT</header>
             <form className="login-container">
                 <h1 className="title-login">Login</h1>
-                <input type="email" className='email' onChange={(e) => getEmail(e)} placeholder='Email' required></input>
-                <input type="password" className='password' onChange={(e) => getPassword(e)} placeholder='Password' required></input>
-                <button type='submit' onClick={(e) => Login(e)} className='login-btn'>login</button>
+                {loginMessage && <p>Logging in...</p>}
+                {loginError && <p>error....something went wrong</p>}
+                <input type="email" className='email'
+                    onChange={(e) => getEmail(e)}
+                    placeholder='Email'
+                    required></input>
+                <input type="password" className='password'
+                    onChange={(e) => getPassword(e)}
+                    placeholder='Password'
+                    required></input>
+                <button type='submit'
+                    onClick={(e) => Login(e)}
+                    className='login-btn'>login</button>
                 <Link className="signup-link" to="/signup">Sign Up</Link>
             </form>
         </>

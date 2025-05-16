@@ -68,3 +68,15 @@ header{
 .signup-link{
     margin-bottom: 15px;
 }
+
+.creating-account{
+    color: orange;
+}
+
+.sigup-error{
+    color: red;
+}
+
+.created-account{
+    color: green;
+}
