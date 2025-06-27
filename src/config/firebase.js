@@ -4,18 +4,18 @@ import { getFirestore } from "firebase/firestore";
 import { collection } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDTdfgWw0XeAwaUWl7Dp1ZajR97Se65-BE",
-  authDomain: "just-do-it-12cdc.firebaseapp.com",
-  projectId: "just-do-it-12cdc",
-  storageBucket: "just-do-it-12cdc.firebasestorage.app",
-  messagingSenderId: "967411406587",
-  appId: "1:967411406587:web:3edddd86458e03c617025e",
-  measurementId: "G-W54QMWRSV1"
-}; 
+  apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_APP_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_APP_FIREBASE_MEASUREMENT_ID,
+};
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app)
-const noteCollections = collection(db, "users")
+const db = getFirestore(app);
+const noteCollections = collection(db, "users");
 
-export {auth , noteCollections, db}
+export { auth, noteCollections, db };
