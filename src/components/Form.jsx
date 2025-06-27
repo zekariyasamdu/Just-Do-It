@@ -1,7 +1,7 @@
 import { useRef, useContext } from "react";
 // contexts
-import { dataBaseUpdatedContext } from "../Context/DataBaseUpdatedContext.jsx"
-import { messageContext } from "../Context/messageContext.jsx";
+import { dataBaseUpdatedContext } from "../context/DataBaseUpdatedContext.jsx"
+import { messageContext } from "../context/MessageContext.jsx";
 // firebase
 import { addDoc } from "firebase/firestore";
 // utils

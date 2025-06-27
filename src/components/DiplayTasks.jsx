@@ -2,7 +2,7 @@ import { useContext } from 'react';
 // components
 import UpdateForm from './UpdateForm'
 // contexts
-import { dataBaseUpdatedContext } from "../Context/DataBaseUpdatedContext.jsx"
+import { dataBaseUpdatedContext } from "../context/DataBaseUpdatedContext.jsx"
 // firebase
 import { updateDoc, deleteField, deleteDoc } from "firebase/firestore";
 

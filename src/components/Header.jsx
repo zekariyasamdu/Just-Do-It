@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 // contexts
-import { loginContext } from '../Context/LoginContext'
+import { loginContext } from '../context/LoginContext'
 // firebase
 import { Link } from 'react-router-dom'
 import { signOut } from "firebase/auth";

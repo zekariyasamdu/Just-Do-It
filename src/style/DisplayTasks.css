@@ -12,7 +12,7 @@
 
 .each-container {
     width: 400px;
-    height: 100px;
+    height: 150px;
     padding: 10px;
     display: flex;
     position: relative;

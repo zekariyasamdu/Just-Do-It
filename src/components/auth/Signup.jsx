@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import {  useRef, useState } from "react";
 // firestore
-import { auth } from "../config/firebase"
+import { auth } from "../../config/firebase"
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { addDoc } from "firebase/firestore";
-import { noteCollections } from "../config/firebase";
+import { noteCollections } from "../../config/firebase";
 // utils 
-import { removeDefault } from "../utils/utils"
+import { removeDefault } from "../../utils/utils"
 
 export default function SignUp() {
 
@@ -53,9 +53,6 @@ export default function SignUp() {
                 setTimeout(setError(false), 3000)
                 console.log("something went wrong")
                 console.log("error", e)
-            }
-            finally {
-                return;
             }
         } else {
             console.error("not matching")

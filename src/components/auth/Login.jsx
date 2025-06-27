@@ -1,12 +1,9 @@
-import { use, useContext, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-// context
-import { loginContext } from "../Context/LoginContext";
-// firebase
-import { auth } from "../config/firebase"
+import { loginContext } from "../../Context/LoginContext";
+import { auth } from "../../config/firebase"
 import { signInWithEmailAndPassword } from "firebase/auth"
-// utils
-import { removeDefault } from "../utils/utils"
+import { removeDefault } from "../../utils/utils"
 
 
 export default function Login() {

@@ -1,7 +1,7 @@
 import { useContext, useRef } from "react"
 // context
-import {messageContext} from "../Context/messageContext"
-import { dataBaseUpdatedContext } from "../Context/DataBaseUpdatedContext"
+import {messageContext} from "../context/MessageContext"
+import { dataBaseUpdatedContext } from "../context/DataBaseUpdatedContext"
 // firebase 
 import { updateDoc } from "firebase/firestore"
 // style

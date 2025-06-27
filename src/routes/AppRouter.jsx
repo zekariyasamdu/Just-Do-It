@@ -1,8 +1,8 @@
-import { BrowserRouter, Link, Navigate, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Routes } from "react-router-dom";
 import { Route } from 'react-router-dom'
-import SignUp from "../Auth/Signup";
-import Authication from "../Pages/AuthPage";
-import HomePage from "../Pages/HomePage";
+import SignUp from "../components/Auth/Signup"
+import Authication from "../pages/AuthPage";
+import HomePage from "../pages/HomePage";
 import { useContext } from "react";
 import { loginContext } from "../Context/LoginContext";
 

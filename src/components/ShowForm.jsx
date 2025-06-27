@@ -1,20 +1,12 @@
 import { useContext, useEffect, useState } from "react"
-// contexts
-import { messageContext } from '../Context/messageContext.jsx'
-// components 
+import { messageContext } from '../context/MessageContext.jsx'
 import DiplayTasks from "./DiplayTasks.jsx"
 import Form from "./Form.jsx"
 import Popup from "./Popup.jsx"
-// firebase
 import { getDocs } from "firebase/firestore"
-import { dataBaseUpdatedContext } from "../Context/DataBaseUpdatedContext.jsx"
-// style 
+import { dataBaseUpdatedContext } from "../context/DataBaseUpdatedContext.jsx"
 import '../style/ShowForm.css'
 import { getCurrenCollection } from "../utils/utils.js"
-
-// ShowForm -> has the task of diplaying or not diplaying the Form component 
-// More over is responsible for containing the main state that contains all the tasks and some states that are shared between sibling components.
-
 
 export default function ShowForm() {
     // contexts 
@@ -48,7 +40,6 @@ export default function ShowForm() {
 
     }, [change])
 
-    // toggling logic 
     const [visible, setVisibility] = useState(false)
     function toggler() {
         setVisibility(visible === false ? true : false)
